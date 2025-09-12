@@ -208,3 +208,28 @@ class SegmentationModel(torch.nn.Module, SMPHubMixin):
         so their running statistics are updated again.
         """
         return self._set_encoder_trainable(True)
+
+
+class DiffModel(SegmentationModel):
+
+    def forward(self, first, second):
+        """Sequentially pass `x` trough model`s encoder, decoder and heads"""
+
+        if not (
+            torch.jit.is_scripting() or torch.jit.is_tracing() or is_torch_compiling()
+        ):
+            self.check_input_shape(first)
+            self.check_input_shape(second)
+
+        first_features = self.encoder(first)
+        second_features = self.encoder(second)
+        combined_features = [torch.cat((first_features[i], second_features[i]), dim=1) for i in range(len(first_features))]
+        decoder_output = self.decoder(combined_features)
+
+        masks = self.segmentation_head(decoder_output)
+
+        if self.classification_head is not None:
+            labels = self.classification_head(combined_features[-1])
+            return masks, labels
+
+        return masks

@@ -1,3 +1,3 @@
-from .model import MAnet
+from .model import MAnet, MAnetDiff
 
-__all__ = ["MAnet"]
+__all__ = ["MAnet", "MAnetDiff"]

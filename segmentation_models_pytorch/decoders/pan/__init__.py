@@ -1,3 +1,3 @@
-from .model import PAN
+from .model import PAN, PANDiff
 
-__all__ = ["PAN"]
+__all__ = ["PAN", "PANDiff"]

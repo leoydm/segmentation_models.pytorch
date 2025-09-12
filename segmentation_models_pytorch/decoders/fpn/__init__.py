@@ -1,3 +1,3 @@
-from .model import FPN
+from .model import FPN, FPNDiff
 
-__all__ = ["FPN"]
+__all__ = ["FPN", "FPNDiff"]

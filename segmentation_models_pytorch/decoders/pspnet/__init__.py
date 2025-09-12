@@ -1,3 +1,3 @@
-from .model import PSPNet
+from .model import PSPNet, PSPNetDiff
 
-__all__ = ["PSPNet"]
+__all__ = ["PSPNet", "PSPNetDiff"]

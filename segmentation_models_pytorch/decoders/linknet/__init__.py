@@ -1,3 +1,3 @@
-from .model import Linknet
+from .model import Linknet, LinknetDiff
 
-__all__ = ["Linknet"]
+__all__ = ["Linknet", "LinknetDiff"]

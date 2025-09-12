@@ -1,3 +1,3 @@
-from .model import UPerNet
+from .model import UPerNet, UPerNetDiff
 
-__all__ = ["UPerNet"]
+__all__ = ["UPerNet", "UPerNetDiff"]

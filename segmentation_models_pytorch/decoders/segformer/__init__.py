@@ -1,3 +1,3 @@
-from .model import Segformer
+from .model import Segformer, SegformerDiff
 
-__all__ = ["Segformer"]
+__all__ = ["Segformer", "SegformerDiff"]

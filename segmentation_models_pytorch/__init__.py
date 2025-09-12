@@ -4,16 +4,16 @@ from . import decoders
 from . import losses
 from . import metrics
 
-from .decoders.unet import Unet
+from .decoders.unet import Unet, UnetDiff
 from .decoders.unetplusplus import UnetPlusPlus
 from .decoders.manet import MAnet
 from .decoders.linknet import Linknet
 from .decoders.fpn import FPN
 from .decoders.pspnet import PSPNet
-from .decoders.deeplabv3 import DeepLabV3, DeepLabV3Plus
+from .decoders.deeplabv3 import DeepLabV3, DeepLabV3Plus, DeepLabV3Diff, DeepLabV3PlusDiff
 from .decoders.pan import PAN
 from .decoders.upernet import UPerNet
-from .decoders.segformer import Segformer
+from .decoders.segformer import Segformer, SegformerDiff
 from .decoders.dpt import DPT
 from .base.hub_mixin import from_pretrained
 
@@ -25,6 +25,7 @@ import torch as _torch
 
 _MODEL_ARCHITECTURES = [
     Unet,
+    UnetDiff,
     UnetPlusPlus,
     MAnet,
     Linknet,
@@ -32,9 +33,12 @@ _MODEL_ARCHITECTURES = [
     PSPNet,
     DeepLabV3,
     DeepLabV3Plus,
+    DeepLabV3Diff,
+    DeepLabV3PlusDiff,
     PAN,
     UPerNet,
     Segformer,
+    SegformerDiff,
     DPT,
 ]
 MODEL_ARCHITECTURES_MAPPING = {a.__name__.lower(): a for a in _MODEL_ARCHITECTURES}
@@ -76,6 +80,7 @@ __all__ = [
     "losses",
     "metrics",
     "Unet",
+    "UnetDiff",
     "UnetPlusPlus",
     "MAnet",
     "Linknet",
@@ -83,9 +88,12 @@ __all__ = [
     "PSPNet",
     "DeepLabV3",
     "DeepLabV3Plus",
+    "DeepLabV3Diff",
+    "DeepLabV3PlusDiff",
     "PAN",
     "UPerNet",
     "Segformer",
+    "SegformerDiff",
     "DPT",
     "from_pretrained",
     "create_model",

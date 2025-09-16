@@ -1,3 +1,3 @@
-from .model import Unet, UnetDiff
+from .model import Unet, UnetDiff, UnetRefiner
 
-__all__ = ["Unet", "UnetDiff"]
+__all__ = ["Unet", "UnetDiff", "UnetRefiner"]

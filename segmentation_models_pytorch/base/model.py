@@ -233,3 +233,43 @@ class DiffModel(SegmentationModel):
             return masks, labels
 
         return masks
+
+
+class RefinerModel(SegmentationModel):
+
+
+    def initialize(self):
+        init.initialize_decoder(self.decoder)
+        init.initialize_decoder(self.refiner)
+        init.initialize_head(self.mask_feature_head)
+        init.initialize_head(self.mask_head)
+        init.initialize_head(self.segmentation_head)
+        if self.classification_head is not None:
+            init.initialize_head(self.classification_head)
+
+    def forward(self, first, second):
+        """Sequentially pass `x` trough model`s encoder, decoder and heads"""
+
+        if not (
+            torch.jit.is_scripting() or torch.jit.is_tracing() or is_torch_compiling()
+        ):
+            self.check_input_shape(first)
+            self.check_input_shape(second)
+
+        first_features = self.encoder(first)
+        second_features = self.encoder(second)
+        combined_features = [torch.cat((first_features[i], second_features[i]), dim=1) for i in range(len(first_features))]
+        decoder_output = self.decoder(combined_features)
+        mid_masks = self.mask_head(decoder_output)
+        masks_ft = self.mask_feature_head(decoder_output)
+        mask_features = self.encoder(masks_ft)
+
+        mask_combined_features = [torch.cat((first_features[i], second_features[i],mask_features[i]), dim=1) for i in range(len(first_features))]
+        refiner_output = self.refiner(mask_combined_features)
+        masks = self.segmentation_head(refiner_output)
+
+        if self.classification_head is not None:
+            labels = self.classification_head(mask_combined_features[-1])
+            return mid_masks, masks, labels
+
+        return mid_masks, masks

@@ -4,7 +4,7 @@ from . import decoders
 from . import losses
 from . import metrics
 
-from .decoders.unet import Unet, UnetDiff
+from .decoders.unet import Unet, UnetDiff, UnetRefiner
 from .decoders.unetplusplus import UnetPlusPlus, UnetPlusPlusDiff
 from .decoders.manet import MAnet, MAnetDiff
 from .decoders.linknet import Linknet, LinknetDiff
@@ -13,8 +13,8 @@ from .decoders.pspnet import PSPNet, PSPNetDiff
 from .decoders.deeplabv3 import DeepLabV3, DeepLabV3Plus, DeepLabV3Diff, DeepLabV3PlusDiff
 from .decoders.pan import PAN, PANDiff
 from .decoders.upernet import UPerNet, UPerNetDiff
-from .decoders.segformer import Segformer, SegformerDiff
-from .decoders.dpt import DPT, DPTDiff
+from .decoders.segformer import Segformer, SegformerDiff, SegformerRefiner
+from .decoders.dpt import DPT
 from .base.hub_mixin import from_pretrained
 
 from .__version__ import __version__
@@ -26,6 +26,7 @@ import torch as _torch
 _MODEL_ARCHITECTURES = [
     Unet,
     UnetDiff,
+    UnetRefiner,
     UnetPlusPlus,
     UnetPlusPlusDiff,
     MAnet,
@@ -46,8 +47,8 @@ _MODEL_ARCHITECTURES = [
     UPerNetDiff,
     Segformer,
     SegformerDiff,
+    SegformerRefiner,
     DPT,
-    DPTDiff,
 ]
 MODEL_ARCHITECTURES_MAPPING = {a.__name__.lower(): a for a in _MODEL_ARCHITECTURES}
 

@@ -1,3 +1,3 @@
-from .model import Segformer, SegformerDiff
+from .model import Segformer, SegformerDiff, SegformerRefiner
 
-__all__ = ["Segformer", "SegformerDiff"]
+__all__ = ["Segformer", "SegformerDiff", "SegformerRefiner"]

@@ -107,6 +107,7 @@ __all__ = [
     "DeepLabV3Plus",
     "DeepLabV3Diff",
     "DeepLabV3PlusDiff",
+    "DeepLabV3PlusDiffS",
     "PAN",
     "PANDiff",
     "UPerNet",

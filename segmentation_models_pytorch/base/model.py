@@ -222,7 +222,7 @@ class DiffModel(SegmentationModel):
             self.check_input_shape(second)
 
         first_features = self.encoder(first)
-        second_features = self.encoder(second)
+        second_features = self.encoder2(second)
         combined_features = [torch.cat((first_features[i], second_features[i]), dim=1) for i in range(len(first_features))]
         decoder_output = self.decoder(combined_features)
 

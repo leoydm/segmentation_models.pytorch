@@ -446,6 +446,29 @@ class DeepLabV3PlusDiff(DiffModel):
             **kwargs,
         )
 
+        self.encoder2 = get_encoder(
+            encoder_name,
+            in_channels=in_channels,
+            depth=encoder_depth,
+            weights=encoder_weights,
+            output_stride=encoder_output_stride,
+            **kwargs,
+        )
+
+        import functools
+
+        def rsetattr(obj, attr, val):
+            pre, _, post = attr.rpartition('.')
+            return setattr(rgetattr(obj, pre) if pre else obj, post, val)
+
+        def rgetattr(obj, attr, *args):
+            def _getattr(obj, attr):
+                return getattr(obj, attr, *args)
+            return functools.reduce(_getattr, [obj] + attr.split('.'))
+
+        for name, param in self.encoder.named_parameters():
+            rsetattr(self.encoder2, name, param)
+
         encoder_out_channels = [num * 2 for num in self.encoder.out_channels]
 
         self.decoder = DeepLabV3PlusDecoder(
@@ -705,16 +728,6 @@ class DeepLabV3PlusRefiner(RefinerModel):
             **kwargs,
         )
 
-
-        self.mid_mask_encoder = get_encoder(
-            mid_mask_encoder_name,
-            in_channels=1,
-            depth=encoder_depth,
-            weights=encoder_weights,
-            output_stride=encoder_output_stride,
-            **kwargs,
-        )
-
         encoder_out_channels = [num * 2 for num in self.encoder.out_channels]
 
         self.decoder = DeepLabV3PlusDecoder(
@@ -725,6 +738,15 @@ class DeepLabV3PlusRefiner(RefinerModel):
             output_stride=encoder_output_stride,
             aspp_separable=decoder_aspp_separable,
             aspp_dropout=decoder_aspp_dropout,
+        )
+
+        self.mid_mask_encoder = get_encoder(
+            mid_mask_encoder_name,
+            in_channels=1,
+            depth=encoder_depth,
+            weights=encoder_weights,
+            output_stride=encoder_output_stride,
+            **kwargs,
         )
 
         mask_encoder_out_channels = [self.encoder.out_channels[i] * 2 + self.mid_mask_encoder.out_channels[i] for i in range(len(self.encoder.out_channels))]
@@ -738,23 +760,6 @@ class DeepLabV3PlusRefiner(RefinerModel):
             aspp_separable=decoder_aspp_separable,
             aspp_dropout=decoder_aspp_dropout,
         )
-
-
-        # self.mask_head = SegmentationHead(
-        #     in_channels=decoder_channels,
-        #     out_channels=classes,
-        #     activation=activation,
-        #     kernel_size=1,
-        #     upsampling=upsampling,
-        # )
-# mobilenetv4_conv_small_050.e3000_r224_in1k
-        # self.mask_feature_head = SegmentationHead(
-        #     in_channels=decoder_channels,
-        #     out_channels=3,
-        #     activation=activation,
-        #     kernel_size=1,
-        #     upsampling=upsampling,
-        # )
 
         self.segmentation_head = SegmentationHead(
             in_channels=decoder_channels,

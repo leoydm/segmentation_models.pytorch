@@ -446,7 +446,6 @@ class DeepLabV3PlusDiff(DiffModel):
             **kwargs,
         )
 
-        self.encoder2 = self.encoder
 
         # import functools
 
@@ -569,14 +568,14 @@ class DeepLabV3PlusDiffS(DiffModel):
             **kwargs,
         )
 
-        self.encoder2 = get_encoder(
-            encoder_name,
-            in_channels=in_channels,
-            depth=encoder_depth,
-            weights=encoder_weights,
-            output_stride=encoder_output_stride,
-            **kwargs,
-        )
+        # self.encoder2 = get_encoder(
+        #     encoder_name,
+        #     in_channels=in_channels,
+        #     depth=encoder_depth,
+        #     weights=encoder_weights,
+        #     output_stride=encoder_output_stride,
+        #     **kwargs,
+        # )
 
         encoder_out_channels = [num * 2 for num in self.encoder.out_channels]
 

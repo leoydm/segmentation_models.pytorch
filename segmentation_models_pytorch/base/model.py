@@ -235,6 +235,34 @@ class DiffModel(SegmentationModel):
         return masks
 
 
+class MinusModel(SegmentationModel):
+
+    def forward(self, first, second):
+        """Sequentially pass `x` trough model`s encoder, decoder and heads"""
+
+        if not (
+            torch.jit.is_scripting() or torch.jit.is_tracing() or is_torch_compiling()
+        ):
+            self.check_input_shape(first)
+            self.check_input_shape(second)
+
+        first_features = self.encoder(first)
+        second_features = self.encoder(second)
+        combined_features = [first_features[i] - second_features[i] for i in range(len(first_features))]
+        del first_features
+        del second_features
+        decoder_output = self.decoder(combined_features)
+        del combined_features
+
+        masks = self.segmentation_head(decoder_output)
+        del decoder_output
+
+        # if self.classification_head is not None:
+        #     labels = self.classification_head(combined_features[-1])
+        #     return masks, labels
+
+        return masks
+
 class RefinerModel(SegmentationModel):
 
 

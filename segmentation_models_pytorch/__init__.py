@@ -10,7 +10,7 @@ from .decoders.manet import MAnet, MAnetDiff
 from .decoders.linknet import Linknet, LinknetDiff
 from .decoders.fpn import FPN, FPNDiff
 from .decoders.pspnet import PSPNet, PSPNetDiff
-from .decoders.deeplabv3 import DeepLabV3, DeepLabV3Plus, DeepLabV3Diff, DeepLabV3PlusDiff, DeepLabV3Refiner, DeepLabV3PlusRefiner, DeepLabV3PlusDiffS
+from .decoders.deeplabv3 import DeepLabV3, DeepLabV3Plus, DeepLabV3Diff, DeepLabV3PlusDiff, DeepLabV3Refiner, DeepLabV3PlusRefiner, DeepLabV3PlusDiffS, DeepLabV3PlusMinus
 from .decoders.pan import PAN, PANDiff
 from .decoders.upernet import UPerNet, UPerNetDiff
 from .decoders.segformer import Segformer, SegformerDiff, SegformerRefiner
@@ -41,6 +41,7 @@ _MODEL_ARCHITECTURES = [
     DeepLabV3Plus,
     DeepLabV3Diff,
     DeepLabV3PlusDiff,
+    DeepLabV3PlusMinus,
     DeepLabV3Refiner,
     DeepLabV3PlusRefiner,
     PAN,

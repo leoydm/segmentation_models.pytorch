@@ -684,7 +684,7 @@ class DeepLabV3PlusMinus(MinusModel):
         #     **kwargs,
         # )
 
-        encoder_out_channels = [num * 2 for num in self.encoder.out_channels]
+        encoder_out_channels = self.encoder.out_channels
 
         self.decoder = DeepLabV3PlusDecoder(
             encoder_channels=encoder_out_channels,

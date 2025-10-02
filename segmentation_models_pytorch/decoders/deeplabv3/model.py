@@ -597,7 +597,7 @@ class DeepLabV3PlusMinus(MinusModel):
         self.name = "deeplabv3plus-{}".format(encoder_name)
 
 
-class DeepLabV3PlusMinus(Minu):
+class DeepLabV3PlusMinus(MinusModel):
     """DeepLabV3+ implementation from "Encoder-Decoder with Atrous Separable
     Convolution for Semantic Image Segmentation"
 

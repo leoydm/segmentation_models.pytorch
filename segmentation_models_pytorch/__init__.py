@@ -10,7 +10,7 @@ from .decoders.manet import MAnet, MAnetDiff
 from .decoders.linknet import Linknet, LinknetDiff
 from .decoders.fpn import FPN, FPNDiff
 from .decoders.pspnet import PSPNet, PSPNetDiff
-from .decoders.deeplabv3 import DeepLabV3, DeepLabV3Plus, DeepLabV3Diff, DeepLabV3PlusDiff, DeepLabV3Refiner, DeepLabV3PlusRefiner, DeepLabV3PlusDiffS, DeepLabV3PlusMinus
+from .decoders.deeplabv3 import DeepLabV3, DeepLabV3Plus, DeepLabV3Diff, DeepLabV3PlusDiff, DeepLabV3Refiner, DeepLabV3PlusRefiner, DeepLabV3PlusMinus
 from .decoders.pan import PAN, PANDiff
 from .decoders.upernet import UPerNet, UPerNetDiff
 from .decoders.segformer import Segformer, SegformerDiff, SegformerRefiner
@@ -52,7 +52,6 @@ _MODEL_ARCHITECTURES = [
     SegformerDiff,
     SegformerRefiner,
     DPT,
-    DeepLabV3PlusDiffS,
 ]
 MODEL_ARCHITECTURES_MAPPING = {a.__name__.lower(): a for a in _MODEL_ARCHITECTURES}
 
@@ -108,7 +107,6 @@ __all__ = [
     "DeepLabV3Plus",
     "DeepLabV3Diff",
     "DeepLabV3PlusDiff",
-    "DeepLabV3PlusDiffS",
     "PAN",
     "PANDiff",
     "UPerNet",

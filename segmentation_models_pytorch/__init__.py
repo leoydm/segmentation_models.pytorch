@@ -5,7 +5,7 @@ from . import losses
 from . import metrics
 
 from .decoders.unet import Unet, UnetDiff, UnetRefiner
-from .decoders.unetplusplus import UnetPlusPlus, UnetPlusPlusDiff
+from .decoders.unetplusplus import UnetPlusPlus, UnetPlusPlusDiff, UnetPlusPlusDiffDD
 from .decoders.manet import MAnet, MAnetDiff
 from .decoders.linknet import Linknet, LinknetDiff
 from .decoders.fpn import FPN, FPNDiff
@@ -29,6 +29,7 @@ _MODEL_ARCHITECTURES = [
     UnetRefiner,
     UnetPlusPlus,
     UnetPlusPlusDiff,
+    UnetPlusPlusDiffDD,
     MAnet,
     MAnetDiff,
     Linknet,
@@ -95,6 +96,7 @@ __all__ = [
     "UnetDiff",
     "UnetPlusPlus",
     "UnetPlusPlusDiff",
+    "UnetPlusPlusDiffDD",
     "MAnet",
     "MAnetDiff",
     "Linknet",

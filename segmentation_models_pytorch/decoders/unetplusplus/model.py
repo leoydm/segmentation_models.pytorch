@@ -394,7 +394,7 @@ class UnetPlusPlusDiffDD(DiffDDModel):
             in_channels=decoder_channels[-1],
             out_channels=classes,
             activation=activation,
-            upsampling=2**(5-self.decoder_depth),
+            # upsampling=2**(5-self.decoder_depth),
             kernel_size=3,
         )
 

@@ -26,7 +26,7 @@ Notes:
 - VGG-style models use `_is_vgg_style` to align scale-1 features with standard outputs.
 """
 
-from typing import Any
+from typing import Any, Union, Tuple
 
 import timm
 import torch
@@ -53,7 +53,7 @@ class TimmUniversalEncoder(nn.Module):
         name: str,
         pretrained: bool = True,
         in_channels: int = 3,
-        depth: int = 5,
+        depth: Union[int, Tuple[int, int]] = 5,
         output_stride: int = 32,
         **kwargs: dict[str, Any],
     ):
@@ -79,13 +79,23 @@ class TimmUniversalEncoder(nn.Module):
         self.name = name
 
         # Default model configuration for feature extraction
-        common_kwargs = dict(
-            in_chans=in_channels,
-            features_only=True,
-            output_stride=output_stride,
-            pretrained=pretrained,
-            out_indices=tuple(range(depth)),
-        )
+
+        if isinstance(depth, int):
+            common_kwargs = dict(
+                in_chans=in_channels,
+                features_only=True,
+                output_stride=output_stride,
+                pretrained=pretrained,
+                out_indices=tuple(range(depth)),
+            )
+        else:
+            common_kwargs = dict(
+                in_chans=in_channels,
+                features_only=True,
+                output_stride=output_stride,
+                pretrained=pretrained,
+                out_indices=depth,
+            )
 
         # Ｎot all models support output stride argument, drop it by default
         if output_stride == 32:

@@ -53,8 +53,9 @@ class TimmUniversalEncoder(nn.Module):
         name: str,
         pretrained: bool = True,
         in_channels: int = 3,
-        depth: Union[int, Tuple[int, int]] = 5,
+        depth: int = 5,
         output_stride: int = 32,
+        out_indices = None,
         **kwargs: dict[str, Any],
     ):
         """
@@ -80,13 +81,13 @@ class TimmUniversalEncoder(nn.Module):
 
         # Default model configuration for feature extraction
 
-        if isinstance(depth, int):
+        if out_indices:
             common_kwargs = dict(
                 in_chans=in_channels,
                 features_only=True,
                 output_stride=output_stride,
                 pretrained=pretrained,
-                out_indices=tuple(range(depth)),
+                out_indices=out_indices,
             )
         else:
             common_kwargs = dict(
@@ -94,7 +95,7 @@ class TimmUniversalEncoder(nn.Module):
                 features_only=True,
                 output_stride=output_stride,
                 pretrained=pretrained,
-                out_indices=depth,
+                out_indices=tuple(range(depth)),
             )
 
         # Ｎot all models support output stride argument, drop it by default

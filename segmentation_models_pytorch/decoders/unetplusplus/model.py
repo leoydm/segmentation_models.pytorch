@@ -368,16 +368,17 @@ class UnetPlusPlusDiffDD(DiffDDModel):
             )
             decoder_use_norm = decoder_use_batchnorm
 
+        self.decoder_depth = 5 - int(math.log2(decoder_downsample))
+
         self.encoder = get_encoder(
             encoder_name,
             in_channels=in_channels,
             depth=encoder_depth,
             weights=encoder_weights,
+            out_indices=range(encoder_depth)[-self.decoder_depth:],
             **kwargs,
         )
-        self.decoder_depth = 5 - int(math.log2(decoder_downsample))
-
-        encoder_out_channels = [num * 2 for num in [self.encoder.out_channels[0]] + self.encoder.out_channels[-self.decoder_depth:]]
+        encoder_out_channels = [num * 2 for num in self.encoder.out_channels]
         decoder_channels = decoder_channels[:self.decoder_depth]
 
         self.decoder = UnetPlusPlusDecoder(

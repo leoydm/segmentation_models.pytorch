@@ -68,7 +68,7 @@ def is_equivalent_to_timm_universal(name):
     return False
 
 
-def get_encoder(name, in_channels=3, depth=5, weights=None, output_stride=32, **kwargs):
+def get_encoder(name, in_channels=3, depth=5, weights=None, output_stride=32, out_indices=None, **kwargs):
     if name.startswith("timm-"):
         warnings.warn(
             "`timm-` encoders are deprecated and will be removed in the future. "
@@ -90,6 +90,7 @@ def get_encoder(name, in_channels=3, depth=5, weights=None, output_stride=32, **
             depth=depth,
             output_stride=output_stride,
             pretrained=weights is not None,
+            out_indices=out_indices,
             **kwargs,
         )
         return encoder
